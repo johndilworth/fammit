@@ -1,0 +1,75 @@
+{
+  PersonCast: [
+    {Id: '1', OnPath: false},
+    {Id: '2', OnPath: false},
+    {Id: '3', OnPath: false},
+    {Id: '4', OnPath: true},
+    {Id: '5', OnPath: false},
+    {Id: '6', OnPath: true},
+  ],
+  GenerationCast: ['F-1', 'F-2'],
+  YearMin: 1970,
+  YearMax: 1998,
+  InitialGeneration: {
+    Id: 'F-1',
+    People: [
+      {
+        Id: '1',
+        Birth: 1940,
+        Death: null,
+        Gender: 'Male'
+      },
+      {
+        Id: '2',
+        Birth: 1945,
+        Death: 1994,
+        Gender: 'Female'
+      },
+      {
+        Id: '3',
+        Birth: 1965,
+        Death: null,
+        Gender: null
+      }
+    ]    
+  },
+  
+  Events: [
+    {
+      Type: 'EnterPerson',
+      Year: 1970.0,
+     Id: '4',
+      Birth: 1970.0,
+      Death: 1993.0,
+      Gender: 'Male',
+      EntryType: 'Birth'
+      Generation: 'F-1'
+    },
+    {
+      Type: 'EnterGeneration',
+      Year: 1990,
+      Id: 'F-2',
+      TransitionPeople: [ '4' ]
+    },
+    {
+      Type: 'EnterPerson',
+      Year: 1990,
+      Id: '5',
+      Birth: 1972,
+      Death: null,
+      Gender: 'Female',
+      EntryType: 'Marriage',
+      Generation: 'F-2'
+    },
+    {
+      Type: 'EnterPerson',
+      Year: 1991,
+      Id: '6',
+      Birth: 1991,
+      Death: null,
+      Gender: 'Female',
+      EntryType: 'Birth'
+      Generation: 'F-2'
+    },
+  ]
+}

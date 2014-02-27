@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Faminator</title>  
+  <meta charset="utf-8" />
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700" rel="stylesheet" type="text/css"> 
+    <link rel="stylesheet" href="js/jquery-ui/themes/base/jquery.ui.all.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <script src="./js/jquery-ui/jquery-1.10.2.js"></script>
+    <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
+
+    
+    
+    <script src="js/jquery-ui/ui/jquery.ui.core.js"></script>
+    <script src="js/jquery-ui/ui/jquery.ui.widget.js"></script>
+    <script src="js/jquery-ui/ui/jquery.ui.mouse.js"></script>
+    <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
+
+
+  <script src="js/TweenMax.min.js"></script>
+  <script src="js/TimeLineMax.min.js"></script>
+
+
+  <style type="text/css">
+    body{
+      font-family: 'Source Sans Pro';;
+        background: #ddd;
+        color: #000;
+        font-size: 20px;
+    }
+
+#stage span{
+  font-size: 72px;
+}
+#demo {
+  text-align: center;
+  margin-top:20px;
+}
+#bg {
+      background-color:#000;
+  position:relative;
+      overflow:hidden;
+  display:inline-block;
+      width:500px;
+      height:70px;
+      border-radius: 8px;
+      border: 2px solid #777;
+}   
+#text {
+    position:absolute;
+    text-align:center;
+    width:500px;
+    height:70px;
+      line-height:68px;
+  font-size: 28px;
+}       
+#text span {
+      -webkit-font-smoothing: antialiased;
+      -moz-font-smoothing:antialiased;
+    position:relative;
+      display:inline-block;
+      color:#FFF;
+}    
+
+    #slider {
+        display: inline-block;
+        width: 500px;
+        height:12px;
+        margin:8px 0px 8px 6px; 
+    }
+
+    #controls button {
+        width: 80px;
+    }
+
+    #controls input {
+        display:inline;
+        padding:2px;
+        margin:2px;
+    }
+
+
+</style>
+ </head>
+ <body>
+ <div id="clock"></div>
+ <div id="stage">
+ 
+  
+</div>
+
+
+
+<div id="slider"></div>
+
+
+
+<div id="controls">
+  <button id="pause">play</button>
+  <button id="reverse">reverse</button>
+  <button id="restart">restart</button>
+  <div>Speed: 
+    <label><input type="radio" name="speed" value="0.25" id="slow"> slow</label>
+    <label><input type="radio" name="speed" value="1" id="normal" checked> normal</label>
+    <label><input type="radio" name="speed" value="2" id="fast"> fast</label>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+var data = {
+    PersonCast: [
+    {Id: '1', OnPath: false},
+    {Id: '2', OnPath: false},
+    {Id: '3', OnPath: false},
+    {Id: '4', OnPath: true},
+    {Id: '5', OnPath: false},
+    {Id: '6', OnPath: true},
+    ],    
+    YearMin: 1970,
+    YearMax: 1998,
+    InitialGeneration: {
+    Id: '1',
+    People: [
+    {
+    Id: '1',
+    Birth: 1940,
+    Death: null,
+    Gender: 'Male'
+    },
+    {
+    Id: '2',
+    Birth: 1945,
+    Death: 1994,
+    Gender: 'Female'
+    },
+    {
+    Id: '3',
+    Birth: 1965,
+    Death: null,
+    Gender: null
+    }
+    ]    
+    },
+
+    Events: [
+    {
+    Type: 'EnterPerson',
+    Year: 1970.0,
+    Id: '4',
+    Birth: 1970.0,
+    Death: 1993.0,
+    Gender: 'Male',
+    EntryType: 'Birth',
+    Generation: 'F-1'
+    },
+    {
+    Type: 'EnterGeneration',
+    Year: 1990,
+    Id: '2',
+    TransitionPeople: [ '4' ]
+    },
+    {
+    Type: 'EnterPerson',
+    Year: 1990,
+    Id: '5',
+    Birth: 1972,
+    Death: null,
+    Gender: 'Female',
+    EntryType: 'Marriage',
+    Generation: '2'
+    },
+    {
+    Type: 'EnterPerson',
+    Year: 1991,
+    Id: '6',
+    Birth: 1991,
+    Death: null,
+    Gender: 'Female',
+    EntryType: 'Birth',
+    Generation: '2'
+    },
+    ]
+    }
+    
+  var $text = $("#text"),
+  $pause = $("#pause"),
+  $reverse = $("#reverse"),
+  $restart = $("#restart"),
+  $speed = $("input[name='speed']"),
+  $slider = $("#slider"),
+  //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object. 
+
+  tl = new TimelineLite({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true});
+
+
+  function updateSlider() {
+    $slider.slider("value", tl.progress() * 100);
+    $("#clock").text( timeScale(tl.progress()) );
+  }
+  
+  function timeScale(v){
+    var realYear = Math.round(v * (data.YearMax - data.YearMin) + data.YearMin);
+    return realYear;
+  }
+
+  function onComplete() {
+    tl.pause();
+    $pause.html("play");
+  }
+
+ // create events and add to timeline object
+
+
+
+data.PersonCast.forEach(function(p){    
+  // add to stage
+    $("#stage").append("<span class='person family-m-1' id='p-"+p.Id+"'></span>");
+    TweenMax.set($("#p-"+p.Id), {autoAlpha:0});
+    // turn on the intial gen people
+    data.InitialGeneration.People.forEach(function(p){
+      TweenMax.set($("#p-"+p.Id), {autoAlpha:1});
+    })
+});
+
+
+
+data.Events.forEach(function(ev){
+
+  var yearOffset = (ev.Year - data.YearMin)
+  if (ev.Type=='EnterPerson'){
+    tl.insert(new TweenLite($("#p-"+ev.Id), .5, {autoAlpha:1}), yearOffset);
+  }else if(ev.Type == 'EnterGeneration'){
+    ev.TransitionPeople.forEach(function(tp){
+    tl.insert(new TweenLite($("#p-"+tp), 1, {autoAlpha:1,color:'#c00'}),   yearOffset);
+  })
+    
+  };
+
+
+});
+
+
+
+    
+
+
+
+
+
+
+
+    //slider and button controls from here on...
+    $slider.slider({
+        range: false,
+        min: 0,
+        max: 100,
+        step:.1,
+        slide: function (event, ui) {
+
+            tl.progress( ui.value / 100 ).pause();
+            $pause.html("play");
+        }
+    });
+        
+    $pause.click(function() {
+      if (tl.paused()) {
+            if (tl.progress() === 1 || (tl.progress() === 0 && tl.reversed())) {
+                tl.restart();
+            } else {
+                  tl.resume();
+            }
+        $pause.html("pause");
+      } else {
+        tl.pause();
+        $pause.html("resume");
+      }
+    });
+
+    $reverse.click(function() {
+          if (tl.progress() === 0) {
+         if (tl.reversed()) {
+           tl.play();
+         } else {
+                   tl.reverse(0);
+         }
+        $pause.html("pause");
+          } else {
+                tl.reversed(!tl.reversed()).resume();
+        $pause.html("pause");
+          }
+    });
+
+    $restart.click(function(){
+          tl.restart();
+      $pause.html("pause");
+    });
+
+    $speed.change(function(v, val) {
+      tl.timeScale(parseFloat($(this).val()));
+      if (tl.progress() === 1) {
+        tl.restart();
+        $pause.html("pause");
+      } else if (tl.paused()) {
+        tl.resume();
+        $pause.html("pause");
+      }
+    });
+
+
+</script>
+
+ </body>
+ </html>
