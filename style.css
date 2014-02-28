@@ -42,6 +42,9 @@
 .family-m-1:before {
 	content: "\e605";
 }
+.family-m-0:before {
+  content: "\e60c";
+}
 .family-f-6:before {
 	content: "\e606";
 }
@@ -60,6 +63,13 @@
 .family-f-1:before {
 	content: "\e60b";
 }
+.family-f-0:before {
+  content: "\e60c";
+}
 .family-b:before {
 	content: "\e60c";
+}
+
+.dead {
+  color: #999;
 }

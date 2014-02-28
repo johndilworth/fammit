@@ -29,10 +29,20 @@
         color: #000;
         font-size: 20px;
     }
-
-#stage span{
-  font-size: 72px;
+#stage {
+  position: relative;
 }
+#stage span{
+  display: inline-block;
+  font-size: 72px;
+  position: absolute;
+  float: left;
+}
+
+#clock{
+  font-size: 5em;
+}
+
 #demo {
   text-align: center;
   margin-top:20px;
@@ -63,39 +73,27 @@
       color:#FFF;
 }
 
-    #slider {
-        display: inline-block;
-        width: 500px;
-        height:12px;
-        margin:8px 0px 8px 6px;
-    }
+#slider {
+    display: inline-block;
+    width: 500px;
+    height:12px;
+    margin:8px 0px 8px 6px;
+}
 
-    #controls button {
-        width: 80px;
-    }
+#controls button {
+    width: 80px;
+}
 
-    #controls input {
-        display:inline;
-        padding:2px;
-        margin:2px;
-    }
-
+#controls input {
+    display:inline;
+    padding:2px;
+    margin:2px;
+}
 
 </style>
  </head>
  <body>
- <div id="clock"></div>
- <div id="stage">
-
-
-</div>
-
-
-
 <div id="slider"></div>
-
-
-
 <div id="controls">
   <button id="pause">play</button>
   <button id="reverse">reverse</button>
@@ -106,6 +104,9 @@
     <label><input type="radio" name="speed" value="2" id="fast"> fast</label>
   </div>
 </div>
+ <div id="clock"></div>
+ <div id="stage">
+</div>
 
 
 
@@ -113,80 +114,810 @@
 <script type="text/javascript">
 
 var data = {
-    PersonCast: [
-    {Id: '1', OnPath: false},
-    {Id: '2', OnPath: false},
-    {Id: '3', OnPath: false},
-    {Id: '4', OnPath: true},
-    {Id: '5', OnPath: false},
-    {Id: '6', OnPath: true},
+    "PersonCast": [
+        {
+            "Id": "30000668481:1030:1544639",
+            "OnPath": false,
+            "Name": "Isaac Allred"
+        },
+        {
+            "Id": "30000668480:1030:1544639",
+            "OnPath": false,
+            "Name": "Mary Calvert"
+        },
+        {
+            "Id": "30000668487:1030:1544639",
+            "OnPath": false,
+            "Name": "Nancy B Allred"
+        },
+        {
+            "Id": "30000668489:1030:1544639",
+            "OnPath": false,
+            "Name": "Martin Allred"
+        },
+        {
+            "Id": "30000668491:1030:1544639",
+            "OnPath": false,
+            "Name": "Reddin Alexander Allred"
+        },
+        {
+            "Id": "30000668492:1030:1544639",
+            "OnPath": false,
+            "Name": "John Calvert Allred"
+        },
+        {
+            "Id": "30000668494:1030:1544639",
+            "OnPath": false,
+            "Name": "Nancy Weakley Allred"
+        },
+        {
+            "Id": "30000668498:1030:1544639",
+            "OnPath": false,
+            "Name": "William Moore Allred"
+        },
+        {
+            "Id": "30000668501:1030:1544639",
+            "OnPath": false,
+            "Name": "Sarah Lovisa Allred"
+        },
+        {
+            "Id": "30000668477:1030:1544639",
+            "OnPath": true,
+            "Name": "Reddick Newton Allred"
+        },
+        {
+            "Id": "30000668491:1030:1544639",
+            "OnPath": false,
+            "Name": "Reddin Alexander Allred"
+        },
+        {
+            "Id": "30000668499:1030:1544639",
+            "OnPath": false,
+            "Name": "Mary Caroline Allred"
+        },
+        {
+            "Id": "30000668496:1030:1544639",
+            "OnPath": false,
+            "Name": "James Riley Allred"
+        },
+        {
+           "Id": "30000668486:1030:1544639",
+            "OnPath": false,
+            "Name": "Paulinus Harvey Allred"
+        },
+        {
+            "Id": "30000668493:1030:1544639",
+            "OnPath": false,
+            "Name": "Paulinus Harvey Allred"
+        },
+        {
+            "Id": "30000668500:1030:1544639",
+            "OnPath": false,
+            "Name": "Joseph Anderson Allred"
+        },
+        {
+            "Id": "30000668497:1030:1544639",
+            "OnPath": false,
+            "Name": "Isaac Morley Allred"
+        },
+        {
+            "Id": "30000668488:1030:1544639",
+            "OnPath": false,
+            "Name": "Sidney Ridgon Allred"
+        },
+        {
+            "Id": "30000668490:1030:1544639",
+            "OnPath": false,
+            "Name": "Sidney Rigdon Allred"
+        },
+        {
+            "Id": "30000668476:1030:1544639",
+            "OnPath": false,
+            "Name": "Lucy Hoyt"
+        },
+        {
+            "Id": "30000668476:1030:1544639",
+            "OnPath": false,
+            "Name": "Lucy Hoyt"
+        },
+        {
+            "Id": "30000668461:1030:1544639",
+            "OnPath": true,
+            "Name": "Redick Reddin Allred"
+        },
+        {
+            "Id": "30000668462:1030:1544639",
+            "OnPath": false,
+            "Name": "Eliza Elvira Allred"
+        },
+        {
+            "Id": "30000668475:1030:1544639",
+            "OnPath": false,
+            "Name": "Druzilla Eliza Allred"
+        },
+        {
+            "Id": "30000668474:1030:1544639",
+            "OnPath": false,
+            "Name": "Evinda Elvira Allred"
+        },
+        {
+            "Id": "30000668442:1030:1544639",
+            "OnPath": true,
+            "Name": "Lucina Azelia Allred"
+        },
+        {
+            "Id": "30000668473:1030:1544639",
+            "OnPath": false,
+            "Name": "Clara Lucinda Allred"
+        },
+        {
+            "Id": "30000668472:1030:1544639",
+            "OnPath": false,
+            "Name": "Cora May Allred"
+        },
+        {
+            "Id": "30000668471:1030:1544639",
+            "OnPath": false,
+            "Name": "Viella Avelia Allred"
+        },
+        {
+            "Id": "30000668470:1030:1544639",
+            "OnPath": false,
+            "Name": "Ervin Redick Allred"
+        },
+        {
+            "Id": "30000668469:1030:1544639",
+            "OnPath": false,
+            "Name": "Vern Henry Allred"
+        },
+        {
+            "Id": "30000668467:1030:1544639",
+            "OnPath": false,
+            "Name": "Della Cynthia Allred"
+        },
+        {
+            "Id": "30000668468:1030:1544639",
+            "OnPath": false,
+            "Name": "Stella Martina Allred"
+        },
+        {
+            "Id": "30000668466:1030:1544639",
+            "OnPath": false,
+            "Name": "Tressa Amelia Allred"
+        },
+        {
+            "Id": "30000668465:1030:1544639",
+            "OnPath": false,
+            "Name": "Bertella Allred"
+        },
+        {
+            "Id": "30000668441:1030:1544639",
+            "OnPath": false,
+            "Name": "Peter Moller Petersen"
+        },
+        {
+            "Id": "30000668456:1030:1544639",
+            "OnPath": false,
+           "Name": "Reed Miller Peterson"
+        },
+        {
+            "Id": "30000668439:1030:1544639",
+            "OnPath": true,
+            "Name": "Dean Reddick Peterson"
+        },
+        {
+            "Id": "30000668455:1030:1544639",
+            "OnPath": false,
+            "Name": "Clara Peterson"
+        },
+        {
+            "Id": "30000668454:1030:1544639",
+            "OnPath": false,
+            "Name": "Eliza Maria Peterson"
+        },
+        {
+            "Id": "30000668453:1030:1544639",
+            "OnPath": false,
+            "Name": "Ervin Miller Peterson"
+        },
+        {
+            "Id": "30000668452:1030:1544639",
+            "OnPath": false,
+            "Name": "Vern James Peterson"
+        },
+        {
+            "Id": "30000668451:1030:1544639",
+            "OnPath": false,
+            "Name": "Jay Peterson"
+        },
+        {
+            "Id": "30000668460:1030:1544639",
+            "OnPath": false,
+            "Name": "Donald Peterson"
+        },
+        {
+            "Id": "30000668459:1030:1544639",
+            "OnPath": false,
+            "Name": "Ray Peterson"
+        },
+        {
+            "Id": "30000668440:1030:1544639",
+            "OnPath": false,
+            "Name": "Edith Lucille Allred"
+        },
+        {
+            "Id": "30000668430:1030:1544639",
+            "OnPath": true,
+            "Name": "Don Gayl Peterson"
+        },
+        {
+            "Id": "30000668443:1030:1544639",
+            "OnPath": false,
+            "Name": "Dean R Peterson"
+        },
+        {
+            "Id": "30000668431:1030:1544639",
+            "OnPath": false,
+            "Name": "Marilyn McNamee"
+        },
+        {
+            "Id": "30000668423:1030:1544639",
+            "OnPath": true,
+            "Name": "Kathleen Peterson"
+        },
+        {
+            "Id": "30000668424:1030:1544639",
+            "OnPath": false,
+            "Name": "Jeffrey Scott Harris"
+        },
+        {
+            "Id": "30000668422:1030:1544639",
+            "OnPath": true,
+            "Name": "Mitchell Harris"
+        }
     ],
-    YearMin: 1970,
-    YearMax: 1998,
-    InitialGeneration: {
-    Id: '1',
-    People: [
-    {
-    Id: '1',
-    Birth: 1940,
-    Death: null,
-    Gender: 'Male'
+    "Generations": 7,
+    "YearMin": 1822.1397260273973,
+    "YearMax": 1980.639344262295,
+    "InitialGeneration": {
+        "People": [
+            {
+                "Id": "30000668481:1030:1544639",
+                "Birth": 1788.0710382513662,
+                "Death": 1870.8657534246574,
+                "Gender": "m"
+            },
+            {
+                "Id": "30000668480:1030:1544639",
+                "Birth": 1793.2109589041097,
+                "Death": 1851.7068493150684,
+                "Gender": "f"
+            },
+            {
+                "Id": "30000668487:1030:1544639",
+                "Birth": 1821.572602739726,
+                "Death": 1860.964480874317,
+                "Gender": "f"
+            },
+            {
+                "Id": "30000668489:1030:1544639",
+                "Birth": 1818,
+                "Death": null,
+                "Gender": "m"
+            },
+            {
+                "Id": "30000668491:1030:1544639",
+                "Birth": 1822.1397260273973,
+                "Death": 1900.4602739726026,
+                "Gender": "m"
+            },
+            {
+                "Id": "30000668492:1030:1544639",
+                "Birth": 1813.7589041095891,
+                "Death": 1893.0246575342467,
+                "Gender": "m"
+            },
+            {
+                "Id": "30000668494:1030:1544639",
+                "Birth": 1815.854794520548,
+                "Death": 1904.2704918032787,
+                "Gender": "f"
+            },
+            {
+                "Id": "30000668498:1030:1544639",
+                "Birth": 1819.978082191781,
+                "Death": 1901.4328767123288,
+                "Gender": "m"
+            },
+            {
+                "Id": "30000668501:1030:1544639",
+                "Birth": 1817.868493150685,
+                "Death": 1879.1890410958904,
+                "Gender": "f"
+            }
+        ]
     },
-    {
-    Id: '2',
-    Birth: 1945,
-    Death: 1994,
-    Gender: 'Female'
-    },
-    {
-    Id: '3',
-    Birth: 1965,
-    Death: null,
-    Gender: null
-    }
+    "Events": [
+        {
+            "Year": 1822.1397260273973,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668477:1030:1544639",
+            "Birth": 1822.1397260273973,
+            "Death": 1905.772602739726,
+            "Gender": "m"
+        },
+        {
+            "Year": 1822.1397260273973,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668491:1030:1544639",
+            "Birth": 1822.1397260273973,
+            "Death": 1900.4602739726026,
+            "Gender": "m"
+        },
+        {
+            "Year": 1824.9371584699454,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668499:1030:1544639",
+            "Birth": 1824.9371584699454,
+            "Death": 1880.3251366120219,
+            "Gender": "f"
+        },
+        {
+            "Year": 1827.0739726027398,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668496:1030:1544639",
+            "Birth": 1827.0739726027398,
+            "Death": 1871.282191780822,
+            "Gender": "m"
+        },
+        {
+            "Year": 1829.054794520548,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668486:1030:1544639",
+            "Birth": 1829.054794520548,
+            "Death": 1900.8821917808218,
+            "Gender": "f"
+        },
+        {
+            "Year": 1829.054794520548,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668493:1030:1544639",
+            "Birth": 1829.054794520548,
+            "Death": 1900.8821917808218,
+            "Gender": "m"
+        },
+        {
+            "Year": 1831.3150684931506,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668500:1030:1544639",
+            "Birth": 1831.3150684931506,
+            "Death": 1891.7424657534248,
+            "Gender": "m"
+        },
+        {
+            "Year": 1835.0575342465754,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668497:1030:1544639",
+            "Birth": 1835.0575342465754,
+            "Death": 1916.4016393442623,
+            "Gender": "m"
+        },
+        {
+            "Year": 1837.805479452055,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668488:1030:1544639",
+            "Birth": 1837.805479452055,
+            "Death": 1911.890410958904,
+            "Gender": "f"
+        },
+        {
+            "Year": 1837.805479452055,
+            "Generation": 0,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668490:1030:1544639",
+            "Birth": 1837.805479452055,
+            "Death": 1911.890410958904,
+            "Gender": "m"
+        },
+        {
+            "Year": 1843.9013698630138,
+            "Generation": 1,
+            "TransitionPeople": [
+                "30000668477:1030:1544639"
+            ],
+            "Type": "EnterGeneration"
+        },
+        {
+            "Year": 1843.9013698630138,
+            "Generation": 1,
+            "Type": "EnterPerson",
+            "EntryType": "Marriage",
+            "Id": "30000668476:1030:1544639",
+            "Birth": 1824.2322404371585,
+            "Death": 1907.4191780821918,
+            "Gender": "f"
+        },
+        {
+            "Year": 1843.9013698630138,
+            "Generation": 0,
+            "Type": "EnterPerson",
+           "EntryType": "Marriage",
+            "Id": "30000668476:1030:1544639",
+            "Birth": 1824.2322404371585,
+            "Death": 1907.4191780821918,
+            "Gender": "f"
+        },
+        {
+            "Year": 1848.9016393442623,
+            "Generation": 1,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668461:1030:1544639",
+            "Birth": 1848.9016393442623,
+            "Death": 1940.1284153005465,
+            "Gender": "m"
+        },
+        {
+            "Year": 1869.5260273972603,
+            "Generation": 2,
+            "TransitionPeople": [
+                "30000668461:1030:1544639"
+            ],
+            "Type": "EnterGeneration"
+        },
+        {
+            "Year": 1869.5260273972603,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Marriage",
+            "Id": "30000668462:1030:1544639",
+            "Birth": 1853.186301369863,
+            "Death": 1913.4328767123288,
+            "Gender": "f"
+        },
+        {
+            "Year": 1870.7534246575342,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668475:1030:1544639",
+            "Birth": 1870.7534246575342,
+            "Death": 1946.3205479452056,
+            "Gender": "f"
+        },
+        {
+            "Year": 1872.9617486338798,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668474:1030:1544639",
+            "Birth": 1872.9617486338798,
+            "Death": 1947.4054794520548,
+            "Gender": "f"
+        },
+        {
+            "Year": 1874.86301369863,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668442:1030:1544639",
+            "Birth": 1874.86301369863,
+            "Death": 1956.032786885246,
+            "Gender": "f"
+        },
+        {
+            "Year": 1876.9590163934427,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668473:1030:1544639",
+            "Birth": 1876.9590163934427,
+            "Death": 1959.3917808219178,
+            "Gender": "f"
+        },
+        {
+            "Year": 1877.6328767123289,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668472:1030:1544639",
+            "Birth": 1877.6328767123289,
+            "Death": 1944.5546448087432,
+            "Gender": "f"
+        },
+        {
+            "Year": 1879.2849315068493,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668471:1030:1544639",
+            "Birth": 1879.2849315068493,
+            "Death": 1959.558904109589,
+            "Gender": "f"
+        },
+        {
+            "Year": 1881.6876712328767,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668470:1030:1544639",
+            "Birth": 1881.6876712328767,
+            "Death": 1968.9590163934427,
+            "Gender": "m"
+        },
+        {
+            "Year": 1884.3661202185792,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668469:1030:1544639",
+            "Birth": 1884.3661202185792,
+            "Death": 1962.5479452054794,
+            "Gender": "m"
+        },
+        {
+            "Year": 1886.1972602739727,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668467:1030:1544639",
+            "Birth": 1886.1972602739727,
+            "Death": 1950.3808219178081,
+            "Gender": "f"
+        },
+        {
+            "Year": 1886.1972602739727,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668468:1030:1544639",
+            "Birth": 1886.1972602739727,
+            "Death": 1886.2356164383561,
+            "Gender": "f"
+        },
+        {
+            "Year": 1889.0602739726028,
+            "Generation": 2,
+           "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668466:1030:1544639",
+            "Birth": 1889.0602739726028,
+            "Death": 1969.690410958904,
+            "Gender": "f"
+        },
+        {
+            "Year": 1891.668493150685,
+            "Generation": 2,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668465:1030:1544639",
+            "Birth": 1891.668493150685,
+            "Death": 1919.172602739726,
+            "Gender": "f"
+        },
+        {
+            "Year": 1897,
+            "Generation": 3,
+            "TransitionPeople": [
+                "30000668442:1030:1544639"
+            ],
+            "Type": "EnterGeneration"
+        },
+        {
+            "Year": 1897,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Marriage",
+            "Id": "30000668441:1030:1544639",
+            "Birth": 1868.8879781420765,
+            "Death": 1962.1835616438357,
+            "Gender": "m"
+        },
+        {
+            "Year": 1897.8109589041096,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668456:1030:1544639",
+            "Birth": 1897.8109589041096,
+            "Death": 1897.9287671232876,
+            "Gender": "m"
+        },
+        {
+            "Year": 1899.2931506849316,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668439:1030:1544639",
+            "Birth": 1899.2931506849316,
+            "Death": 1983.5808219178082,
+            "Gender": "m"
+        },
+        {
+            "Year": 1902,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668455:1030:1544639",
+            "Birth": 1902,
+            "Death": null,
+            "Gender": "f"
+        },
+        {
+            "Year": 1904,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668454:1030:1544639",
+            "Birth": 1904,
+            "Death": 1904,
+            "Gender": "f"
+        },
+        {
+            "Year": 1906.0301369863014,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668453:1030:1544639",
+            "Birth": 1906.0301369863014,
+            "Death": 1993.3561643835617,
+            "Gender": "m"
+        },
+        {
+            "Year": 1908.6065573770493,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668452:1030:1544639",
+            "Birth": 1908.6065573770493,
+            "Death": 1976.3333333333333,
+            "Gender": "m"
+        },
+        {
+            "Year": 1909,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668451:1030:1544639",
+            "Birth": 1909,
+            "Death": 1994.9068493150685,
+            "Gender": "m"
+        },
+        {
+            "Year": 1913,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668460:1030:1544639",
+            "Birth": 1913,
+            "Death": 1975.495890410959,
+            "Gender": "m"
+        },
+        {
+            "Year": 1916,
+            "Generation": 3,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668459:1030:1544639",
+            "Birth": 1916,
+            "Death": 1994.9068493150685,
+            "Gender": "m"
+        },
+        {
+            "Year": 1926.7287671232878,
+            "Generation": 4,
+            "TransitionPeople": [
+                "30000668439:1030:1544639"
+            ],
+            "Type": "EnterGeneration"
+        },
+        {
+            "Year": 1926.7287671232878,
+            "Generation": 4,
+            "Type": "EnterPerson",
+           "EntryType": "Marriage",
+            "Id": "30000668440:1030:1544639",
+            "Birth": 1902.5890410958905,
+            "Death": null,
+            "Gender": "f"
+        },
+        {
+            "Year": 1927.7287671232878,
+            "Generation": 4,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668430:1030:1544639",
+            "Birth": 1927.7287671232878,
+            "Death": 1993.786301369863,
+            "Gender": "m"
+        },
+        {
+            "Year": 1929,
+            "Generation": 4,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668443:1030:1544639",
+            "Birth": 1929,
+            "Death": null,
+            "Gender": "m"
+        },
+        {
+            "Year": 1960.5792349726776,
+            "Generation": 5,
+            "TransitionPeople": [
+                "30000668430:1030:1544639"
+            ],
+            "Type": "EnterGeneration"
+        },
+        {
+            "Year": 1960.5792349726776,
+            "Generation": 5,
+            "Type": "EnterPerson",
+            "EntryType": "Marriage",
+            "Id": "30000668431:1030:1544639",
+            "Birth": 1931.4493150684932,
+            "Death": null,
+            "Gender": "f"
+        },
+        {
+            "Year": 1960.5792349726776,
+            "Generation": 5,
+            "Type": "EnterPerson",
+            "EntryType": "Birth",
+            "Id": "30000668423:1030:1544639",
+            "Birth": 1960.5792349726776,
+            "Death": null,
+            "Gender": "f"
+        },
+        {
+            "Year": 1980.639344262295,
+            "Generation": 6,
+            "TransitionPeople": [
+                "30000668423:1030:1544639"
+            ],
+            "Type": "EnterGeneration"
+        },
+        {
+            "Year": 1980.639344262295,
+            "Generation": 6,
+            "Type": "EnterPerson",
+            "EntryType": "Marriage",
+            "Id": "30000668424:1030:1544639",
+            "Birth": 1957.7424657534248,
+            "Death": null,
+            "Gender": "m"
+        },
+        {
+            "Year": 1980.639344262295,
+            "Generation": 6,
+            "Type": "EnterPerson",
+            "EntryType": "Unknown",
+            "Id": "30000668422:1030:1544639",
+            "Birth": null,
+            "Death": null,
+            "Gender": "m"
+        }
     ]
-    },
-
-    Events: [
-    {
-    Type: 'EnterPerson',
-    Year: 1970.0,
-    Id: '4',
-    Birth: 1970.0,
-    Death: 1993.0,
-    Gender: 'Male',
-    EntryType: 'Birth',
-    Generation: 'F-1'
-    },
-    {
-    Type: 'EnterGeneration',
-    Year: 1990,
-    Id: '2',
-    TransitionPeople: [ '4' ]
-    },
-    {
-    Type: 'EnterPerson',
-    Year: 1990,
-    Id: '5',
-    Birth: 1972,
-    Death: null,
-    Gender: 'Female',
-    EntryType: 'Marriage',
-    Generation: '2'
-    },
-    {
-    Type: 'EnterPerson',
-    Year: 1991,
-    Id: '6',
-    Birth: 1991,
-    Death: null,
-    Gender: 'Female',
-    EntryType: 'Birth',
-    Generation: '2'
-    },
-    ]
-    }
-
+}
   var $text = $("#text"),
   $pause = $("#pause"),
   $reverse = $("#reverse"),
@@ -194,16 +925,24 @@ var data = {
   $speed = $("input[name='speed']"),
   $slider = $("#slider"),
   //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object.
+  tl = new TimelineMax({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true}),
+  gencount = new Array,
+  genYIncrement = 100,
+  genXIncrement = 30
 
-  tl = new TimelineLite({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true});
 
+  for (var i = data.Generations - 1; i >= 0; i--) {
+    gencount.push(0);
+  };
+
+  TweenMax.set($("body"),{perspective:300});
 
   function updateSlider() {
     $slider.slider("value", tl.progress() * 100);
-    $("#clock").text( timeScale(tl.progress()) );
+    $("#clock").text( timeScaleFromNormalized(tl.progress()) );
   }
 
-  function timeScale(v){
+  function timeScaleFromNormalized(v){
     var realYear = Math.round(v * (data.YearMax - data.YearMin) + data.YearMin);
     return realYear;
   }
@@ -213,39 +952,86 @@ var data = {
     $pause.html("play");
   }
 
-  function calcDecal(age, gender) {
-    var ageSteps = [2, 5, 8, 15, 30, 60];
-    for (var i=0; i<ageSteps.length; i++) {
-      if (age < ageSteps[i])
-        return gender+'-'+i;
+  function genCounter(g){
+    gencount[g] = gencount[g]+1;
+    // console.log("genCounter "+gencount)
+  }
+
+
+var ageSteps = [2, 5, 8, 15, 30, 50, 120];
+
+function calcIcon(age, gender) {
+  var lcGend = gender.charAt(0).toLowerCase();
+  for (var i=0; i<ageSteps.length; i++) {
+    if (age < ageSteps[i]) {
+      return 'family-' + lcGend + '-' + i
     }
   }
- // create events and add to timeline object
+  return 'family-' + lcGend + '-4'
+}
 
+function addTimelineClassesToPerson(p) {
+  var pid = '#p-' + stripToPid(p.Id);
+  // console.log("pid: " + pid);
+  var lcGend = p.Gender.charAt(0).toLowerCase();
+  for (var i=0; i<ageSteps.length; i++) {
+    // once they're dead, 'freeze' them at their current class.
+    if (p.Death && p.Death < data.YearMin + ageSteps[i]) {
+      break;
+    }
+    //these are before our timeline starts
+    if (p.Birth + ageSteps[i] <= data.YearMin) {
+      continue;
+    }
+    var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
+    // console.log('adding ' + p.Gender.charAt(0).toLowerCase() + '-' + i + ' to ' + pid + ' at ' + timelineMarker + ' because they were born in ' + p.Birth);
+    var classes = 'person family-' + p.Gender.charAt(0).toLowerCase() + '-' + i;
+    tl.insert(TweenMax.to($(pid),1,{className:classes}), timelineMarker);
+  }
 
+  //finally, get the Death in there.
+  if (p.Death) {
+    console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
+    tl.insert(TweenMax.to($(pid),1,{className:'+=dead'}), p.Death - data.YearMin);
+  }
+}
+
+function stripToPid(longPid) {
+  var shortPid = longPid.split(":")[0];
+  return shortPid;
+}
 
 data.PersonCast.forEach(function(p){
   // add to stage
-    $("#stage").append("<span class='person family-m-1' id='p-"+p.Id+"'></span>");
-    TweenMax.set($("#p-"+p.Id), {autoAlpha:0});
-    // turn on the intial gen people
-    data.InitialGeneration.People.forEach(function(p){
-      TweenMax.set($("#p-"+p.Id), {autoAlpha:1});
-    })
+  var pid = "p-"+stripToPid(p.Id);
+  $("#stage").append("<span class='person' id='"+ pid +"'></span>");
+  TweenMax.set($('#' + pid), {autoAlpha:0});
 });
 
+// turn on the intial gen people
+data.InitialGeneration.People.forEach(function(p){
+  var $pid = $("#p-"+stripToPid(p.Id));
+  $pid.addClass("gen-0");
+  genCounter(0);
+  // tl.insert(TweenMax.set($("#p-"+p.Id), {autoAlpha:1, className:'person ' + calcIcon(data.YearMin - p.Birth, p.Gender)}),  0);
+  TweenMax.set($pid, {autoAlpha:1, className:'person ' + calcIcon(data.YearMin - p.Birth, p.Gender), top:0, left:(genXIncrement*gencount[0])})
+  addTimelineClassesToPerson(p);
+});
 
 
 data.Events.forEach(function(ev){
 
   var yearOffset = (ev.Year - data.YearMin)
   if (ev.Type=='EnterPerson'){
-    tl.insert(new TweenLite($("#p-"+ev.Id), .5, {autoAlpha:1}), yearOffset);
-  }else if(ev.Type == 'EnterGeneration'){
-    ev.TransitionPeople.forEach(function(tp){
-    tl.insert(new TweenLite($("#p-"+tp), 1, {autoAlpha:1,color:'#c00'}),   yearOffset);
-  })
+    genCounter(ev.Generation);
+    tl.insert(new TweenMax($("#p-"+stripToPid(ev.Id)), .5, {autoAlpha:1, top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+    addTimelineClassesToPerson(ev);
 
+  } else if (ev.Type == 'EnterGeneration'){
+    genCounter(ev.Generation);
+    ev.TransitionPeople.forEach(function(tp){
+      tl.insert(new TweenLite($("#p-"+stripToPid(tp)), 1, {autoAlpha:1,color:'#c00',top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+    })
   };
 
 
