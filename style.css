@@ -95,8 +95,8 @@ body{
   top: 160px;
   left:0;
   right:0;
-  bottom:0;  
-  overflow:hidden;
+  bottom: 0;
+  
 }
 
 #stage>div{
@@ -156,8 +156,14 @@ body{
   padding: 10px;
 }
 
-#controls button {
-    width: 80px;
+button {
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-left: 20px;
 }
 
 #controls input {
@@ -165,3 +171,6 @@ body{
     padding:2px;
     margin:2px;
 }
+
+
+
