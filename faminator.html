@@ -373,7 +373,7 @@ var data = {
     ],
     "Generations": 7,
     "YearMin": 1822,
-    "YearMax": 1980.639344262295,
+    "YearMax": 2014,
     "InitialGeneration": {
         "People": [
             {
@@ -895,9 +895,9 @@ var data = {
             "Year": 1980.639344262295,
             "Generation": 6,
             "Type": "EnterPerson",
-            "EntryType": "Unknown",
+            "EntryType": "Birth",
             "Id": "30000668422:1030:1544639",
-            "Birth": null,
+            "Birth": 1980.639344262295,
             "Death": null,
             "Gender": "m"
         }
@@ -970,7 +970,7 @@ function addTimelineClassesToPerson(p) {
       continue;
     }
     var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
-    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + timelineMarker + ' because they were born in ' + p.Birth + " and died in " + p.Death);
+    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + (timelineMarker + data.YearMin) + ' because they were born in ' + p.Birth + " and died in " + p.Death);
     // var classes = 'person family-' + p.Gender + '-' + i;
     //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
     var classToAdd = 'family-' + p.Gender + '-' + i;
