@@ -101,7 +101,7 @@
   <div>Speed:
     <label><input type="radio" name="speed" value="0.25" id="slow"> slow</label>
     <label><input type="radio" name="speed" value="1" id="normal" checked> normal</label>
-    <label><input type="radio" name="speed" value="2" id="fast"> fast</label>
+    <label><input type="radio" name="speed" value="4" id="fast"> fast</label>
   </div>
 </div>
  <div id="clock"></div>
@@ -961,7 +961,7 @@ var data = {
 var ageSteps = [2, 5, 8, 15, 30, 50, 120];
 
 function calcIcon(age, gender) {
-  var lcGend = gender.charAt(0).toLowerCase();
+  var lcGend = gender;
   for (var i=0; i<ageSteps.length; i++) {
     if (age < ageSteps[i]) {
       return 'family-' + lcGend + '-' + i
@@ -973,7 +973,7 @@ function calcIcon(age, gender) {
 function addTimelineClassesToPerson(p) {
   var pid = '#p-' + stripToPid(p.Id);
   // console.log("pid: " + pid);
-  var lcGend = p.Gender.charAt(0).toLowerCase();
+  var lcGend = p.Gender;
   for (var i=0; i<ageSteps.length; i++) {
     // once they're dead, 'freeze' them at their current class.
     if (p.Death && p.Death < data.YearMin + ageSteps[i]) {
@@ -984,9 +984,15 @@ function addTimelineClassesToPerson(p) {
       continue;
     }
     var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
-    // console.log('adding ' + p.Gender.charAt(0).toLowerCase() + '-' + i + ' to ' + pid + ' at ' + timelineMarker + ' because they were born in ' + p.Birth);
-    var classes = 'person family-' + p.Gender.charAt(0).toLowerCase() + '-' + i;
-    tl.insert(TweenMax.to($(pid),1,{className:classes}), timelineMarker);
+    // console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + timelineMarker + ' because they were born in ' + p.Birth);
+    // var classes = 'person family-' + p.Gender + '-' + i;
+    //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
+    var classToAdd = 'family-' + p.Gender + '-' + i;
+    tl.insert(TweenMax.to($(pid),1,{className:'+='+classToAdd}), timelineMarker);
+    if (i>0) {
+      var classToRemove = 'family-' + p.Gender + '-' + (i-1);
+      tl.insert(TweenMax.to($(pid),1,{className:'-='+classToRemove}), timelineMarker);
+    }
   }
 
   //finally, get the Death in there.
@@ -1011,10 +1017,9 @@ data.PersonCast.forEach(function(p){
 // turn on the intial gen people
 data.InitialGeneration.People.forEach(function(p){
   var $pid = $("#p-"+stripToPid(p.Id));
-  $pid.addClass("gen-0");
   genCounter(0);
   // tl.insert(TweenMax.set($("#p-"+p.Id), {autoAlpha:1, className:'person ' + calcIcon(data.YearMin - p.Birth, p.Gender)}),  0);
-  TweenMax.set($pid, {autoAlpha:1, className:'person ' + calcIcon(data.YearMin - p.Birth, p.Gender), top:0, left:(genXIncrement*gencount[0])})
+  TweenMax.set($pid, {autoAlpha:1, className:'person gen-0 ' + calcIcon(data.YearMin - p.Birth, p.Gender), top:0, left:(genXIncrement*gencount[0])})
   addTimelineClassesToPerson(p);
 });
 
@@ -1023,6 +1028,7 @@ data.Events.forEach(function(ev){
 
   var yearOffset = (ev.Year - data.YearMin)
   if (ev.Type=='EnterPerson'){
+    $("#p-"+stripToPid(ev.Id)).addClass("gen-"+ev.Generation);
     genCounter(ev.Generation);
     tl.insert(new TweenMax($("#p-"+stripToPid(ev.Id)), .5, {autoAlpha:1, top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
     addTimelineClassesToPerson(ev);
@@ -1030,6 +1036,7 @@ data.Events.forEach(function(ev){
   } else if (ev.Type == 'EnterGeneration'){
     genCounter(ev.Generation);
     ev.TransitionPeople.forEach(function(tp){
+      $("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
       tl.insert(new TweenLite($("#p-"+stripToPid(tp)), 1, {autoAlpha:1,color:'#c00',top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
     })
   };
