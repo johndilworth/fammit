@@ -944,7 +944,7 @@ function addTimelineClassesToPerson(p) {
   if (p.Death) {
     // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
     // tl.insert(TweenMax.to($(pid),1,{autoAlpha: .3}), p.Death - data.YearMin);
-    tl.insert(TweenMax.to($pid.find('img'),3,{rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);
+    tl.insert(TweenMax.to($pid.find('img'),2,{autoAlpha:.3, rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);
     // rotation:"1.25rad"
   }
 }
@@ -958,10 +958,12 @@ data.PersonCast.forEach(function(p){
   // add to stage
   var pid = "p-"+stripToPid(p.Id);
   $("#stage").append("<div class='person' id='"+ pid +"'><img src='png/b.png' height='25px' /><div class='person-name'>"+p.Name+"</div></div>");
-  TweenMax.set($('#' + pid), {right:-1200});
+  
   if(p.OnPath){
-    $('#' + pid).addClass("onpath");
+      $('#' + pid).append("<svg height='100' width='100'><circle cx='10' cy='10' r='5'  fill='#4A90E2'  /></svg>");
   }
+
+  TweenMax.set($('#' + pid), {right:-1200});
 });
 
 // turn on the intial gen people
