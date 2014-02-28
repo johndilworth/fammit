@@ -377,7 +377,7 @@ var data = {
         }
     ],
     "Generations": 7,
-    "YearMin": 1822.1397260273973,
+    "YearMin": 1822,
     "YearMax": 1980.639344262295,
     "InitialGeneration": {
         "People": [
@@ -394,24 +394,6 @@ var data = {
                 "Gender": "f"
             },
             {
-                "Id": "30000668487:1030:1544639",
-                "Birth": 1821.572602739726,
-                "Death": 1860.964480874317,
-                "Gender": "f"
-            },
-            {
-                "Id": "30000668489:1030:1544639",
-                "Birth": 1818,
-                "Death": null,
-                "Gender": "m"
-            },
-            {
-                "Id": "30000668491:1030:1544639",
-                "Birth": 1822.1397260273973,
-                "Death": 1900.4602739726026,
-                "Gender": "m"
-            },
-            {
                 "Id": "30000668492:1030:1544639",
                 "Birth": 1813.7589041095891,
                 "Death": 1893.0246575342467,
@@ -424,17 +406,35 @@ var data = {
                 "Gender": "f"
             },
             {
+                "Id": "30000668501:1030:1544639",
+                "Birth": 1817.868493150685,
+                "Death": 1879.1890410958904,
+                "Gender": "f"
+            },
+            {
+                "Id": "30000668489:1030:1544639",
+                "Birth": 1818,
+                "Death": null,
+                "Gender": "m"
+            },
+            {
                 "Id": "30000668498:1030:1544639",
                 "Birth": 1819.978082191781,
                 "Death": 1901.4328767123288,
                 "Gender": "m"
             },
             {
-                "Id": "30000668501:1030:1544639",
-                "Birth": 1817.868493150685,
-                "Death": 1879.1890410958904,
+                "Id": "30000668487:1030:1544639",
+                "Birth": 1821.572602739726,
+                "Death": 1860.964480874317,
                 "Gender": "f"
             }
+            // {
+            //     "Id": "30000668491:1030:1544639",
+            //     "Birth": 1822.1397260273973,
+            //     "Death": 1900.4602739726026,
+            //     "Gender": "m"
+            // }
         ]
     },
     "Events": [
@@ -976,7 +976,8 @@ function addTimelineClassesToPerson(p) {
   var lcGend = p.Gender;
   for (var i=0; i<ageSteps.length; i++) {
     // once they're dead, 'freeze' them at their current class.
-    if (p.Death && p.Death < data.YearMin + ageSteps[i]) {
+    if (p.Death && (p.Death < data.YearMin + ageSteps[i])) {
+      console.log(pid + " Death at: " + (data.YearMin + ageSteps[i]));
       break;
     }
     //these are before our timeline starts
@@ -984,7 +985,7 @@ function addTimelineClassesToPerson(p) {
       continue;
     }
     var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
-    // console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + timelineMarker + ' because they were born in ' + p.Birth);
+    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + timelineMarker + ' because they were born in ' + p.Birth + " and died in " + p.Death);
     // var classes = 'person family-' + p.Gender + '-' + i;
     //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
     var classToAdd = 'family-' + p.Gender + '-' + i;
@@ -997,7 +998,7 @@ function addTimelineClassesToPerson(p) {
 
   //finally, get the Death in there.
   if (p.Death) {
-    console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
+    // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
     tl.insert(TweenMax.to($(pid),1,{className:'+=dead'}), p.Death - data.YearMin);
   }
 }
