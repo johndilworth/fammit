@@ -920,7 +920,7 @@ data.PersonCast.forEach(function(p){
   // add to stage
   var pid = "p-"+stripToPid(p.Id);
   $("#stage").append("<div class='person' id='"+ pid +"'><div class='person-name'>"+p.Name+"</div></div>");
-  TweenMax.set($('#' + pid), {right:1200});
+  TweenMax.set($('#' + pid), {right:-1200});
 });
 
 // turn on the intial gen people

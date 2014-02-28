@@ -127,9 +127,9 @@
 #slider {
 	background: #000;
     display: inline-block;
-    width: 100%;
+    width: 500px;
     height:12px;
-    margin:8px 0px 8px 6px;
+ 
 }
 
 #header-controls{
