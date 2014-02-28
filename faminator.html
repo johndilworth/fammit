@@ -13,36 +13,30 @@
     <script src="js/jquery-ui/ui/jquery.ui.mouse.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
     <script src="js/TweenMax.min.js"></script>
-    <script src="js/TimeLineMax.min.js"></script>
-
-
-  <style type="text/css">
-
-
-    </style>
+    <script src="js/TimeLineMax.min.js"></script> 
  </head>
  <body>
- <div id="header-controls">
-<div id="slider"></div>
-<div id="controls">
-  <button id="pause">play</button>
-  <button id="reverse">reverse</button>
-  <button id="restart">restart</button>
-  <div>Speed:
-    <label><input type="radio" name="speed" value="1" id="slow"> slow</label>
-    <label><input type="radio" name="speed" value="2" id="normal" checked> normal</label>
-    <label><input type="radio" name="speed" value="8" id="fast"> fast</label>
-  </div>
-</div>
+
+<div id="header-controls">
+  <div id="clock"></div>
+
 </div>
 
+<div id="stage"></div>
 
- <div id="clock"></div>
- <div id="stage">
+<div id="footer-controls">
+  <div id="slider"></div><button id="pause">play</button>
+ <!--  <div id="controls">
+    <button id="pause">play</button>
+   <button id="reverse">reverse</button>
+    <button id="restart">restart</button>
+    <div>Speed:
+      <label><input type="radio" name="speed" value="2" id="slow"> slow</label>
+      <label><input type="radio" name="speed" value="4" id="normal"> normal</label>
+      <label><input type="radio" name="speed" value="6" id="fast" checked> fast</label>
+    </div>
+  </div> -->
 </div>
-
-
-
 
 <script type="text/javascript">
 
@@ -110,11 +104,6 @@ var data = {
         },
         {
            "Id": "30000668486:1030:1544639",
-            "OnPath": false,
-            "Name": "Paulinus Harvey Allred"
-        },
-        {
-            "Id": "30000668493:1030:1544639",
             "OnPath": false,
             "Name": "Paulinus Harvey Allred"
         },
@@ -410,16 +399,6 @@ var data = {
             "Birth": 1829.054794520548,
             "Death": 1900.8821917808218,
             "Gender": "f"
-        },
-        {
-            "Year": 1829.054794520548,
-            "Generation": 0,
-            "Type": "EnterPerson",
-            "EntryType": "Birth",
-            "Id": "30000668493:1030:1544639",
-            "Birth": 1829.054794520548,
-            "Death": 1900.8821917808218,
-            "Gender": "m"
         },
         {
             "Year": 1831.3150684931506,
@@ -840,9 +819,10 @@ var data = {
   //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object.
   tl = new TimelineMax({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true}),
   gencount = new Array,
-
   genYIncrement = 150,
-  genXIncrement = 55
+  genXIncrement = 55;
+
+  tl.timeScale(6);
 
 
   for (var i = data.Generations - 1; i >= 0; i--) {
@@ -858,6 +838,7 @@ var data = {
   }
 
   function timeScaleFromNormalized(v){
+    // console.log(v);
     var realYear = Math.round(v * (data.YearMax - data.YearMin) + data.YearMin);
     return realYear;
   }
@@ -889,7 +870,7 @@ function addTimelineClassesToPerson(p) {
   var pid = '#p-' + stripToPid(p.Id);
   // console.log("pid: " + pid);
   var lcGend = p.Gender;
-  for (var i=0; i<ageSteps.length; i++) {
+  for (var i=1; i<ageSteps.length; i++) {
     // once they're dead, 'freeze' them at their current class.
     if (p.Death && (p.Death < p.Birth + ageSteps[i])) {
       console.log(pid + " Death at: " + (data.YearMin + ageSteps[i]));
@@ -899,24 +880,27 @@ function addTimelineClassesToPerson(p) {
     if (p.Birth + ageSteps[i] <= data.YearMin) {
       continue;
     }
+
+    if (p.Birth + ageSteps[i] >= data.YearMax) {
+      break
+    }
+
     var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
-    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + (timelineMarker + data.YearMin) + ' because they were born in ' + p.Birth + " and died in " + p.Death);
+    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' with delay of ' + (timelineMarker + data.YearMin) + ' because they were born in ' + p.Birth + " and died in " + p.Death);
     // var classes = 'person family-' + p.Gender + '-' + i;
     //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
     var classToAdd = 'family-' + p.Gender + '-' + i;
-      tl.insert(TweenMax.to($(pid),1,{className:'+='+classToAdd}), timelineMarker);
+      tl.insert(TweenMax.to($(pid),.01,{className:'+='+classToAdd}), timelineMarker);
     if (i>0) {
       var classToRemove = 'family-' + p.Gender + '-' + (i-1);
-      tl.insert(TweenMax.to($(pid),1,{className:'-='+classToRemove}), timelineMarker);
+      tl.insert(TweenMax.to($(pid),.01,{className:'-='+classToRemove}), timelineMarker);
     }
   }
 
   //finally, get the Death in there.
   if (p.Death) {
     // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
-    tl.insert(TweenMax.to($(pid),1,{autoAlpha: .5}), p.Death - data.YearMin);
-    //new death tween - the tip over.
-    //tl.insert(TweenMax.to($(pid),1,{className:'+=dead', rotationZ:-90,}), p.Death - data.YearMin-1);
+    tl.insert(TweenMax.to($(pid),1,{autoAlpha: .3}), p.Death - data.YearMin);    
   }
 }
 
@@ -930,6 +914,9 @@ data.PersonCast.forEach(function(p){
   var pid = "p-"+stripToPid(p.Id);
   $("#stage").append("<div class='person' id='"+ pid +"'><div class='person-name'>"+p.Name+"</div></div>");
   TweenMax.set($('#' + pid), {right:-1200});
+  if(p.OnPath){
+    $('#' + pid).addClass("onpath");
+  }
 });
 
 // turn on the intial gen people
@@ -945,18 +932,25 @@ data.InitialGeneration.People.forEach(function(p){
 data.Events.forEach(function(ev){
 
   var yearOffset = (ev.Year - data.YearMin)
+  
   if (ev.Type=='EnterPerson'){
     $("#p-"+stripToPid(ev.Id)).addClass("gen-"+ev.Generation);
+    if (ev.EntryType == "Birth") {
+      $("#p-"+stripToPid(ev.Id)).addClass("family-"+ev.Gender+ "-0");
+    }
     genCounter(ev.Generation);
     addTimelineClassesToPerson(ev);
-    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 1, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
 
+    TweenMax.set($("#p-"+stripToPid(ev.Id)), {top:(ev.Generation*genYIncrement)});
+    
+    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 2, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
 
   } else if (ev.Type == 'EnterGeneration'){
     genCounter(ev.Generation);
     ev.TransitionPeople.forEach(function(tp){
       $("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
-      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {top:(ev.Generation*genYIncrement), ease:Back.easeInOut}), yearOffset);
+      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {left:(genXIncrement*gencount[ev.Generation]), delay: .5}), yearOffset);
     })
   };
 
@@ -978,7 +972,7 @@ data.Events.forEach(function(ev){
         range: false,
         min: 0,
         max: 100,
-        step:.1,
+        step:1,
         slide: function (event, ui) {
 
             tl.progress( ui.value / 100 ).pause();
