@@ -301,7 +301,7 @@ var data = {
     ],
     "Generations": 7,
     "YearMin": 1822,
-    "YearMax": 1980,
+    "YearMax": 2014,
     "InitialGeneration": {
         "People": [
             {
@@ -853,7 +853,7 @@ var data = {
   TweenLite.set("#stage div", {transformOrigin:"left bottom", transformStyle:"preserve-3d"});
 
   function updateSlider() {
-    $slider.slider("value", tl.progress() * 1000);
+    $slider.slider("value", tl.progress() * 100);
     $("#clock").text( timeScaleFromNormalized(tl.progress()) );
   }
 
@@ -929,7 +929,7 @@ data.PersonCast.forEach(function(p){
   // add to stage
   var pid = "p-"+stripToPid(p.Id);
   $("#stage").append("<div class='person' id='"+ pid +"'><div class='person-name'>"+p.Name+"</div></div>");
-  TweenMax.set($('#' + pid), {right:1200});
+  TweenMax.set($('#' + pid), {right:-1200});
 });
 
 // turn on the intial gen people
@@ -977,11 +977,11 @@ data.Events.forEach(function(ev){
     $slider.slider({
         range: false,
         min: 0,
-        max: 1000,
+        max: 100,
         step:.1,
         slide: function (event, ui) {
 
-            tl.progress( ui.value / 1000 ).pause();
+            tl.progress( ui.value / 100 ).pause();
             $pause.html("play");
         }
     });
