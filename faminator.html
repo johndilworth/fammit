@@ -114,11 +114,6 @@ var data = {
             "Name": "Paulinus Harvey Allred"
         },
         {
-            "Id": "30000668493:1030:1544639",
-            "OnPath": false,
-            "Name": "Paulinus Harvey Allred"
-        },
-        {
             "Id": "30000668500:1030:1544639",
             "OnPath": false,
             "Name": "Joseph Anderson Allred"
@@ -301,7 +296,7 @@ var data = {
     ],
     "Generations": 7,
     "YearMin": 1822,
-    "YearMax": 1980,
+    "YearMax": 2014,
     "InitialGeneration": {
         "People": [
             {
@@ -410,16 +405,6 @@ var data = {
             "Birth": 1829.054794520548,
             "Death": 1900.8821917808218,
             "Gender": "f"
-        },
-        {
-            "Year": 1829.054794520548,
-            "Generation": 0,
-            "Type": "EnterPerson",
-            "EntryType": "Birth",
-            "Id": "30000668493:1030:1544639",
-            "Birth": 1829.054794520548,
-            "Death": 1900.8821917808218,
-            "Gender": "m"
         },
         {
             "Year": 1831.3150684931506,
@@ -853,11 +838,12 @@ var data = {
   TweenLite.set("#stage div", {transformOrigin:"left bottom", transformStyle:"preserve-3d"});
 
   function updateSlider() {
-    $slider.slider("value", tl.progress() * 1000);
+    $slider.slider("value", tl.progress() * 100);
     $("#clock").text( timeScaleFromNormalized(tl.progress()) );
   }
 
   function timeScaleFromNormalized(v){
+    // console.log(v);
     var realYear = Math.round(v * (data.YearMax - data.YearMin) + data.YearMin);
     return realYear;
   }
@@ -889,7 +875,7 @@ function addTimelineClassesToPerson(p) {
   var pid = '#p-' + stripToPid(p.Id);
   // console.log("pid: " + pid);
   var lcGend = p.Gender;
-  for (var i=0; i<ageSteps.length; i++) {
+  for (var i=1; i<ageSteps.length; i++) {
     // once they're dead, 'freeze' them at their current class.
     if (p.Death && (p.Death < p.Birth + ageSteps[i])) {
       console.log(pid + " Death at: " + (data.YearMin + ageSteps[i]));
@@ -899,15 +885,20 @@ function addTimelineClassesToPerson(p) {
     if (p.Birth + ageSteps[i] <= data.YearMin) {
       continue;
     }
+
+    if (p.Birth + ageSteps[i] >= data.YearMax) {
+      break
+    }
+
     var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
-    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' at ' + (timelineMarker + data.YearMin) + ' because they were born in ' + p.Birth + " and died in " + p.Death);
+    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' with delay of ' + (timelineMarker + data.YearMin) + ' because they were born in ' + p.Birth + " and died in " + p.Death);
     // var classes = 'person family-' + p.Gender + '-' + i;
     //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
     var classToAdd = 'family-' + p.Gender + '-' + i;
-      tl.insert(TweenMax.to($(pid),1,{className:'+='+classToAdd}), timelineMarker);
+      tl.insert(TweenMax.to($(pid),.01,{className:'+='+classToAdd}), timelineMarker);
     if (i>0) {
       var classToRemove = 'family-' + p.Gender + '-' + (i-1);
-      tl.insert(TweenMax.to($(pid),1,{className:'-='+classToRemove}), timelineMarker);
+      tl.insert(TweenMax.to($(pid),.01,{className:'-='+classToRemove}), timelineMarker);
     }
   }
 
@@ -945,8 +936,12 @@ data.InitialGeneration.People.forEach(function(p){
 data.Events.forEach(function(ev){
 
   var yearOffset = (ev.Year - data.YearMin)
+  console.log(yearOffset);
   if (ev.Type=='EnterPerson'){
     $("#p-"+stripToPid(ev.Id)).addClass("gen-"+ev.Generation);
+    if (ev.EntryType == "Birth") {
+      $("#p-"+stripToPid(ev.Id)).addClass("family-"+ev.Gender+ "-0");
+    }
     genCounter(ev.Generation);
     addTimelineClassesToPerson(ev);
     tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 1, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
@@ -977,11 +972,11 @@ data.Events.forEach(function(ev){
     $slider.slider({
         range: false,
         min: 0,
-        max: 1000,
-        step:.1,
+        max: 100,
+        step:1,
         slide: function (event, ui) {
 
-            tl.progress( ui.value / 1000 ).pause();
+            tl.progress( ui.value / 100 ).pause();
             $pause.html("play");
         }
     });
