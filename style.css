@@ -27,49 +27,51 @@
 
 
 .family-m-6 {
-  background-image: url(png/m-6.png);
+  /*background-image: url(png/m-6.png);*/
 }
 .family-m-5 {
-  background-image: url(png/m-5.png);
+  /*background-image: url(png/m-5.png);*/
 }
 .family-m-4 {
-  background-image: url(png/m-4.png);
+  /*background-image: url(png/m-4.png);*/
 }
 .family-m-3 {
-  background-image: url(png/m-3.png);
+  /*background-image: url(png/m-3.png);*/
 }
 .family-m-2 {
-  background-image: url(png/m-2.png);
+  /*background-image: url(png/m-2.png);*/
 }
 .family-m-1 {
-  background-image: url(png/m-1.png);
+  /*background-image: url(png/m-1.png);*/
 }
 .family-m-0 {
-  background-image: url(png/b.png);
+  /*background-image: url(png/b.png);*/
+    background-size: contain;
 }
 .family-f-6 {
-  background-image: url(png/f-6.png);
+  /*background-image: url(png/f-6.png);*/
 }
 .family-f-5 {
-  background-image: url(png/f-5.png);
+  /*background-image: url(png/f-5.png);*/
 }
 .family-f-4 {
-  background-image: url(png/f-4.png);
+  /*background-image: url(png/f-4.png);*/
 }
 .family-f-3 {
-  background-image: url(png/f-3.png);
+  /*background-image: url(png/f-3.png);*/
 }
 .family-f-2 {
-  background-image: url(png/f-2.png);
+  /*background-image: url(png/f-2.png);*/
 }
 .family-f-1 {
-  background-image: url(png/f-1.png);
+  /*background-image: url(png/f-1.png);*/
 }
 .family-f-0 {
-  background-image: url(png/b.png);
+  /*background-image: url(png/b.png);*/
+    background-size: contain;
 }
 .family-b {
-  background-image: url(png/b.png);
+  /*background-image: url(png/b.png);*/
 }
 
 .dead {
@@ -96,14 +98,14 @@ body{
   left:0;
   right:0;
   bottom: 0;
-  
+
 }
 
 #stage>div{
-  display: block; 
+  display: block;
   text-align: center;
   /*border: 1px solid #fff;*/
-  position: absolute;  
+  position: absolute;
 }
 
 .person {
@@ -112,6 +114,18 @@ body{
   width: 30px;
   height: 100px;
 
+  /*display: table;*/
+}
+
+.person > img {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  /*margin-right: auto;
+  margin-left: auto;
+  */
+  /*display: table-cell;*/
+  /*vertical-align: bottom;*/
 }
 
 #stage>div div.person-name{
@@ -130,17 +144,17 @@ body{
   color: #fff;
   font-weight: 200;
   font-size: 5em;
-    
+
 }
 
 #slider {
   background: #000;
   display: inline-block;
   width: 500px;
-  height:12px; 
+  height:12px;
 }
 
-#footer-controls{  
+#footer-controls{
   position: fixed;
   left:0;
   right:0;
