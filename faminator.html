@@ -891,7 +891,7 @@ function addTimelineClassesToPerson(p) {
   var lcGend = p.Gender;
   for (var i=0; i<ageSteps.length; i++) {
     // once they're dead, 'freeze' them at their current class.
-    if (p.Death && (p.Death < data.YearMin + ageSteps[i])) {
+    if (p.Death && (p.Death < p.Birth + ageSteps[i])) {
       console.log(pid + " Death at: " + (data.YearMin + ageSteps[i]));
       break;
     }
