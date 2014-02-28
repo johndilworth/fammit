@@ -932,7 +932,7 @@ data.InitialGeneration.People.forEach(function(p){
 data.Events.forEach(function(ev){
 
   var yearOffset = (ev.Year - data.YearMin)
-  
+
   if (ev.Type=='EnterPerson'){
     $("#p-"+stripToPid(ev.Id)).addClass("gen-"+ev.Generation);
     if (ev.EntryType == "Birth") {
