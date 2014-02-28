@@ -13,7 +13,7 @@
     <script src="js/jquery-ui/ui/jquery.ui.mouse.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
     <script src="js/TweenMax.min.js"></script>
-    <script src="js/TimeLineMax.min.js"></script> 
+    <script src="js/TimeLineMax.min.js"></script>
  </head>
  <body>
 
@@ -340,13 +340,14 @@
                     "Birth": 1821.572602739726,
                     "Death": 1860.964480874317,
                     "Gender": "f"
-                },
-                {
-                    "Id": "30000668491:1030:1544639",
-                    "Birth": 1822.1397260273973,
-                    "Death": 1900.4602739726026,
-                    "Gender": "m"
                 }
+                // ,
+                // {
+                //     "Id": "30000668491:1030:1544639",
+                //     "Birth": 1822.1397260273973,
+                //     "Death": 1900.4602739726026,
+                //     "Gender": "m"
+                // }
             ]
         },
         "Events": [
@@ -860,10 +861,11 @@ function calcIcon(age, gender) {
   var lcGend = gender;
   for (var i=0; i<ageSteps.length; i++) {
     if (age < ageSteps[i]) {
-      return 'family-' + lcGend + '-' + i
+      // return 'family-' + lcGend + '-' + i
+      return lcGend + '-' + i
     }
   }
-  return 'family-' + lcGend + '-4'
+  return lcGend + '-4'
 }
 
 function interp(v1, v2, p) {
@@ -883,21 +885,25 @@ function heightForAge(age) {
 }
 
 function heightForAgeAndGender(age,gender) {
-    if (age < 2) return .33;
-    if (gender == 'f') return ((heightForAge(age) * .70)*100).toFixed(0);
-    return (heightForAge(age)*75).toFixed(0);
+    if (age < 2) return 25;
+    if (gender == 'f') return ((heightForAge(age) * .95)*100).toFixed(0);
+    return (heightForAge(age)*100).toFixed(0);
+}
+
+function ageBump($pid, img) {
+  $pid.find('img').attr('src', 'png/'+img+'.png');
 }
 
 function addTimelineClassesToPerson(p) {
   var pid = '#p-' + stripToPid(p.Id);
+  var $pid = $(pid);
   // console.log("pid: " + pid);
   var lcGend = p.Gender;
     var haveSetHeight = false;
   for (var i=1; i<ageSteps.length; i++) {
-    var height = heightForAgeAndGender(ageSteps[i],lcGend);
     // once they're dead, 'freeze' them at their current class.
     if (p.Death && (p.Death < p.Birth + ageSteps[i])) {
-      console.log(pid + " Death at: " + (data.YearMin + ageSteps[i]));
+      // console.log(pid + " Death at: " + (data.YearMin + ageSteps[i]));
       break;
     }
     //these are before our timeline starts
@@ -908,32 +914,38 @@ function addTimelineClassesToPerson(p) {
     if (p.Birth + ageSteps[i] >= data.YearMax) {
         break;
     }
-      if (!haveSetHeight) {
-          haveSetHeight = true;
-          $(pid).css('background-size', ''+height + '% ' + (height - .001) + '%');
-      }
+
+    // if (!haveSetHeight) {
+        var height = heightForAgeAndGender(ageSteps[i],lcGend);
+        haveSetHeight = true;
+        if (i>1) {
+          tl.insert(TweenMax.to($pid.find('img'),ageSteps[i],{height:height}), timelineMarker);
+        }
+        // $(pid).('background-size', ''+height + '% ' + (height - .001) + '%');
+        // $(pid).find('img').attr('height', height + 'px');
+    // }
 
 
 
     var timelineMarker = p.Birth + ageSteps[i] - data.YearMin;
-    console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' with delay of ' + (timelineMarker + data.YearMin) + ' because they were born in ' + p.Birth + " and died in " + p.Death
-        + ' height: ' + height);
+     //console.log('adding ' + p.Gender + '-' + i + ' to ' + pid + ' with delay of ' + (timelineMarker) + ' because they were born in ' + p.Birth + " and died in " + p.Death + ' height: ' + height);
       // var classes = 'person family-' + p.Gender + '-' + i;
       //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
     var classToAdd = 'family-' + p.Gender + '-' + i;
-      tl.insert(TweenMax.to($(pid),.01,{className:'+='+classToAdd}), timelineMarker);
+      // tl.insert(TweenMax.to($(pid),.01,{className:'+='+classToAdd}), timelineMarker);
+      tl.insert(TweenMax.to($pid,.01,{className:'+='+classToAdd, onComplete:ageBump, onCompleteParams:[$pid, p.Gender + '-' + i]}), timelineMarker);
       var classToRemove = 'family-' + p.Gender + '-' + (i - 1);
-      tl.insert(TweenMax.to($(pid), .01, { className: '-=' + classToRemove }), timelineMarker);
+      tl.insert(TweenMax.to($pid, .01, { className: '-=' + classToRemove }), timelineMarker);
 
-      tl.insert(TweenMax.to($(pid), ageSteps[i] - ageSteps[i - 1], { backgroundSize: ''+height+'% ' + (height-0.001)+'%'}), timelineMarker);
+      // tl.insert(TweenMax.to($pid, ageSteps[i] - ageSteps[i - 1], { backgroundSize: ''+height+'% ' + (height-0.001)+'%'}), timelineMarker);
   }
 
   //finally, get the Death in there.
   if (p.Death) {
     // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
-    // tl.insert(TweenMax.to($(pid),1,{autoAlpha: .3}), p.Death - data.YearMin);    
-    tl.insert(TweenMax.to($(pid),1,{rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);    
-    rotation:"1.25rad"
+    // tl.insert(TweenMax.to($(pid),1,{autoAlpha: .3}), p.Death - data.YearMin);
+    tl.insert(TweenMax.to($pid.find('img'),3,{rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);
+    // rotation:"1.25rad"
   }
 }
 
@@ -945,7 +957,7 @@ function stripToPid(longPid) {
 data.PersonCast.forEach(function(p){
   // add to stage
   var pid = "p-"+stripToPid(p.Id);
-  $("#stage").append("<div class='person' id='"+ pid +"'><div class='person-name'>"+p.Name+"</div></div>");
+  $("#stage").append("<div class='person' id='"+ pid +"'><img src='png/b.png' height='25px' /><div class='person-name'>"+p.Name+"</div></div>");
   TweenMax.set($('#' + pid), {right:-1200});
   if(p.OnPath){
     $('#' + pid).addClass("onpath");
@@ -956,8 +968,11 @@ data.PersonCast.forEach(function(p){
 data.InitialGeneration.People.forEach(function(p){
   var $pid = $("#p-"+stripToPid(p.Id));
   genCounter(0);
+  var leIcon = calcIcon(data.YearMin - p.Birth, p.Gender);
     // tl.insert(TweenMax.set($("#p-"+p.Id), {autoAlpha:1, className:'person ' + calcIcon(data.YearMin - p.Birth, p.Gender)}),  0);
-  TweenMax.set($pid, {autoAlpha:1, className:'person gen-0 ' + calcIcon(data.YearMin - p.Birth, p.Gender), top:0, left:(genXIncrement*gencount[0])})
+  TweenMax.set($pid, {autoAlpha:1, className:'person gen-0 family-' + leIcon, top:0, left:(genXIncrement*gencount[0])})
+  console.log(heightForAgeAndGender(data.YearMin - p.Birth, p.Gender));
+  $pid.find('img').attr('src','png/' + leIcon + '.png').attr('height', heightForAgeAndGender(data.YearMin - p.Birth, p.Gender));
   addTimelineClassesToPerson(p);
 });
 
@@ -975,15 +990,16 @@ data.Events.forEach(function(ev){
     addTimelineClassesToPerson(ev);
 
     TweenMax.set($("#p-"+stripToPid(ev.Id)), {top:(ev.Generation*genYIncrement)});
-    
-    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 2, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+
+    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 3, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
 
   } else if (ev.Type == 'EnterGeneration'){
     genCounter(ev.Generation);
     ev.TransitionPeople.forEach(function(tp){
-      $("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
-      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {top:(ev.Generation*genYIncrement), ease:Back.easeInOut}), yearOffset);
-      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {left:(genXIncrement*gencount[ev.Generation]), delay: .5}), yearOffset);
+      var $pid = $("#p-"+stripToPid(tp));
+      $pid.addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
+      tl.insert(new TweenMax($pid, 2, {top:(ev.Generation*genYIncrement), ease:Back.easeInOut}), yearOffset);
+      tl.insert(new TweenMax($pid, 1, {left:(genXIncrement*gencount[ev.Generation]), delay: 1}), yearOffset);
     })
   };
 
