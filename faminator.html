@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Faminator</title>  
+  <title>Faminator</title>
   <meta charset="utf-8" />
-  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700" rel="stylesheet" type="text/css"> 
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="js/jquery-ui/themes/base/jquery.ui.all.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    
+
     <script src="./js/jquery-ui/jquery-1.10.2.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
 
-    
-    
+
+
     <script src="js/jquery-ui/ui/jquery.ui.core.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.widget.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.mouse.js"></script>
@@ -46,7 +46,7 @@
       height:70px;
       border-radius: 8px;
       border: 2px solid #777;
-}   
+}
 #text {
     position:absolute;
     text-align:center;
@@ -54,20 +54,20 @@
     height:70px;
       line-height:68px;
   font-size: 28px;
-}       
+}
 #text span {
       -webkit-font-smoothing: antialiased;
       -moz-font-smoothing:antialiased;
     position:relative;
       display:inline-block;
       color:#FFF;
-}    
+}
 
     #slider {
         display: inline-block;
         width: 500px;
         height:12px;
-        margin:8px 0px 8px 6px; 
+        margin:8px 0px 8px 6px;
     }
 
     #controls button {
@@ -86,8 +86,8 @@
  <body>
  <div id="clock"></div>
  <div id="stage">
- 
-  
+
+
 </div>
 
 
@@ -100,7 +100,7 @@
   <button id="pause">play</button>
   <button id="reverse">reverse</button>
   <button id="restart">restart</button>
-  <div>Speed: 
+  <div>Speed:
     <label><input type="radio" name="speed" value="0.25" id="slow"> slow</label>
     <label><input type="radio" name="speed" value="1" id="normal" checked> normal</label>
     <label><input type="radio" name="speed" value="2" id="fast"> fast</label>
@@ -120,7 +120,7 @@ var data = {
     {Id: '4', OnPath: true},
     {Id: '5', OnPath: false},
     {Id: '6', OnPath: true},
-    ],    
+    ],
     YearMin: 1970,
     YearMax: 1998,
     InitialGeneration: {
@@ -144,7 +144,7 @@ var data = {
     Death: null,
     Gender: null
     }
-    ]    
+    ]
     },
 
     Events: [
@@ -186,14 +186,14 @@ var data = {
     },
     ]
     }
-    
+
   var $text = $("#text"),
   $pause = $("#pause"),
   $reverse = $("#reverse"),
   $restart = $("#restart"),
   $speed = $("input[name='speed']"),
   $slider = $("#slider"),
-  //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object. 
+  //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object.
 
   tl = new TimelineLite({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true});
 
@@ -202,7 +202,7 @@ var data = {
     $slider.slider("value", tl.progress() * 100);
     $("#clock").text( timeScale(tl.progress()) );
   }
-  
+
   function timeScale(v){
     var realYear = Math.round(v * (data.YearMax - data.YearMin) + data.YearMin);
     return realYear;
@@ -213,11 +213,18 @@ var data = {
     $pause.html("play");
   }
 
+  function calcDecal(age, gender) {
+    var ageSteps = [2, 5, 8, 15, 30, 60];
+    for (var i=0; i<ageSteps.length; i++) {
+      if (age < ageSteps[i])
+        return gender+'-'+i;
+    }
+  }
  // create events and add to timeline object
 
 
 
-data.PersonCast.forEach(function(p){    
+data.PersonCast.forEach(function(p){
   // add to stage
     $("#stage").append("<span class='person family-m-1' id='p-"+p.Id+"'></span>");
     TweenMax.set($("#p-"+p.Id), {autoAlpha:0});
@@ -238,7 +245,7 @@ data.Events.forEach(function(ev){
     ev.TransitionPeople.forEach(function(tp){
     tl.insert(new TweenLite($("#p-"+tp), 1, {autoAlpha:1,color:'#c00'}),   yearOffset);
   })
-    
+
   };
 
 
@@ -246,7 +253,7 @@ data.Events.forEach(function(ev){
 
 
 
-    
+
 
 
 
@@ -266,7 +273,7 @@ data.Events.forEach(function(ev){
             $pause.html("play");
         }
     });
-        
+
     $pause.click(function() {
       if (tl.paused()) {
             if (tl.progress() === 1 || (tl.progress() === 0 && tl.reversed())) {
