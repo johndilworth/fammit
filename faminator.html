@@ -819,8 +819,8 @@ var data = {
   //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object.
   tl = new TimelineMax({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true}),
   gencount = new Array,
-  genYIncrement = 150,
-  genXIncrement = 55;
+  genYIncrement = 160,
+  genXIncrement = 45;
 
   tl.timeScale(6);
 
@@ -901,7 +901,7 @@ function addTimelineClassesToPerson(p) {
   if (p.Death) {
     // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
     // tl.insert(TweenMax.to($(pid),1,{autoAlpha: .3}), p.Death - data.YearMin);    
-    tl.insert(TweenMax.to($(pid),1,{rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);    
+    tl.insert(TweenMax.to($(pid),1,{autoAlpha:.3,rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);    
     rotation:"1.25rad"
   }
 }
