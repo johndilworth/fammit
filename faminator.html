@@ -6,20 +6,14 @@
   <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="js/jquery-ui/themes/base/jquery.ui.all.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-
     <script src="./js/jquery-ui/jquery-1.10.2.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
-
-
-
     <script src="js/jquery-ui/ui/jquery.ui.core.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.widget.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.mouse.js"></script>
     <script src="js/jquery-ui/ui/jquery.ui.slider.js"></script>
-
-
-  <script src="js/TweenMax.min.js"></script>
-  <script src="js/TimeLineMax.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script src="js/TimeLineMax.min.js"></script>
 
 
   <style type="text/css">
@@ -28,6 +22,7 @@
     </style>
  </head>
  <body>
+ <div id="header-controls">
 <div id="slider"></div>
 <div id="controls">
   <button id="pause">play</button>
@@ -39,6 +34,9 @@
     <label><input type="radio" name="speed" value="8" id="fast"> fast</label>
   </div>
 </div>
+</div>
+
+
  <div id="clock"></div>
  <div id="stage">
 </div>
@@ -308,7 +306,7 @@ var data = {
     ],
     "Generations": 7,
     "YearMin": 1822,
-    "YearMax": 2014,
+    "YearMax": 1980,
     "InitialGeneration": {
         "People": [
             {
@@ -847,18 +845,19 @@ var data = {
   //"tl" is the timeline we'll add our tweens to. Then we can easily control the whole sequence as one object.
   tl = new TimelineMax({onUpdate:updateSlider, onComplete:onComplete, onReverseComplete:onComplete, paused:true}),
   gencount = new Array,
-  genYIncrement = 100,
-  genXIncrement = 30
+  genYIncrement = 150,
+  genXIncrement = 55
 
 
   for (var i = data.Generations - 1; i >= 0; i--) {
     gencount.push(0);
   };
 
-  TweenMax.set($("body"),{perspective:300});
+  // TweenMax.set($("#stage span"),{perspective:300});
+  TweenLite.set("#stage div", {transformOrigin:"left bottom", transformStyle:"preserve-3d"});
 
   function updateSlider() {
-    $slider.slider("value", tl.progress() * 100);
+    $slider.slider("value", tl.progress() * 1000);
     $("#clock").text( timeScaleFromNormalized(tl.progress()) );
   }
 
@@ -909,7 +908,7 @@ function addTimelineClassesToPerson(p) {
     // var classes = 'person family-' + p.Gender + '-' + i;
     //$("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
     var classToAdd = 'family-' + p.Gender + '-' + i;
-    tl.insert(TweenMax.to($(pid),1,{className:'+='+classToAdd}), timelineMarker);
+      tl.insert(TweenMax.to($(pid),1,{className:'+='+classToAdd}), timelineMarker);
     if (i>0) {
       var classToRemove = 'family-' + p.Gender + '-' + (i-1);
       tl.insert(TweenMax.to($(pid),1,{className:'-='+classToRemove}), timelineMarker);
@@ -919,7 +918,9 @@ function addTimelineClassesToPerson(p) {
   //finally, get the Death in there.
   if (p.Death) {
     // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
-    tl.insert(TweenMax.to($(pid),1,{className:'+=dead'}), p.Death - data.YearMin);
+    tl.insert(TweenMax.to($(pid),1,{autoAlpha: .5}), p.Death - data.YearMin);
+    //new death tween - the tip over.
+    //tl.insert(TweenMax.to($(pid),1,{className:'+=dead', rotationZ:-90,}), p.Death - data.YearMin-1);
   }
 }
 
@@ -931,8 +932,8 @@ function stripToPid(longPid) {
 data.PersonCast.forEach(function(p){
   // add to stage
   var pid = "p-"+stripToPid(p.Id);
-  $("#stage").append("<span class='person' id='"+ pid +"'></span>");
-  TweenMax.set($('#' + pid), {autoAlpha:0});
+  $("#stage").append("<div class='person' id='"+ pid +"'><div class='person-name'>"+p.Name+"</div></div>");
+  TweenMax.set($('#' + pid), {right:1200});
 });
 
 // turn on the intial gen people
@@ -951,14 +952,15 @@ data.Events.forEach(function(ev){
   if (ev.Type=='EnterPerson'){
     $("#p-"+stripToPid(ev.Id)).addClass("gen-"+ev.Generation);
     genCounter(ev.Generation);
-    tl.insert(new TweenMax($("#p-"+stripToPid(ev.Id)), .5, {autoAlpha:1, top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
     addTimelineClassesToPerson(ev);
+    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 1, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+   
 
   } else if (ev.Type == 'EnterGeneration'){
     genCounter(ev.Generation);
     ev.TransitionPeople.forEach(function(tp){
       $("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
-      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {autoAlpha:1,color:'#c00',top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
     })
   };
 
@@ -979,11 +981,11 @@ data.Events.forEach(function(ev){
     $slider.slider({
         range: false,
         min: 0,
-        max: 100,
+        max: 1000,
         step:.1,
         slide: function (event, ui) {
 
-            tl.progress( ui.value / 100 ).pause();
+            tl.progress( ui.value / 1000 ).pause();
             $pause.html("play");
         }
     });
