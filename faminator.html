@@ -216,11 +216,6 @@ var data = {
             "Name": "Lucy Hoyt"
         },
         {
-            "Id": "30000668476:1030:1544639",
-            "OnPath": false,
-            "Name": "Lucy Hoyt"
-        },
-        {
             "Id": "30000668461:1030:1544639",
             "OnPath": true,
             "Name": "Redick Reddin Allred"
@@ -551,16 +546,6 @@ var data = {
             "Generation": 1,
             "Type": "EnterPerson",
             "EntryType": "Marriage",
-            "Id": "30000668476:1030:1544639",
-            "Birth": 1824.2322404371585,
-            "Death": 1907.4191780821918,
-            "Gender": "f"
-        },
-        {
-            "Year": 1843.9013698630138,
-            "Generation": 0,
-            "Type": "EnterPerson",
-           "EntryType": "Marriage",
             "Id": "30000668476:1030:1544639",
             "Birth": 1824.2322404371585,
             "Death": 1907.4191780821918,
@@ -1038,7 +1023,7 @@ data.Events.forEach(function(ev){
     genCounter(ev.Generation);
     ev.TransitionPeople.forEach(function(tp){
       $("#p-"+stripToPid(tp)).addClass("gen-"+ev.Generation).removeClass("gen-"+(Number(ev.Generation)-1));
-      tl.insert(new TweenLite($("#p-"+stripToPid(tp)), 1, {autoAlpha:1,color:'#c00',top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+      tl.insert(new TweenMax($("#p-"+stripToPid(tp)), 1, {autoAlpha:1,color:'#c00',top:(ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
     })
   };
 
