@@ -24,50 +24,58 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.family-m-6:before {
-	content: "\e600";
+.person {
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: 30px;
+  height: 100px;
+
 }
-.family-m-5:before {
-	content: "\e601";
+
+.family-m-6 {
+	background-image: url(png/m-6.png);
 }
-.family-m-4:before {
-	content: "\e602";
+.family-m-5 {
+	background-image: url(png/m-5.png);
 }
-.family-m-3:before {
-	content: "\e603";
+.family-m-4 {
+	background-image: url(png/m-4.png);
 }
-.family-m-2:before {
-	content: "\e604";
+.family-m-3 {
+	background-image: url(png/m-3.png);
 }
-.family-m-1:before {
-	content: "\e605";
+.family-m-2 {
+	background-image: url(png/m-2.png);
 }
-.family-m-0:before {
-  content: "\e60c";
+.family-m-1 {
+	background-image: url(png/m-1.png);
 }
-.family-f-6:before {
-	content: "\e606";
+.family-m-0 {
+  background-image: url(png/b.png);
 }
-.family-f-5:before {
-	content: "\e607";
+.family-f-6 {
+	background-image: url(png/f-6.png);
 }
-.family-f-4:before {
-	content: "\e608";
+.family-f-5 {
+	background-image: url(png/f-5.png);
 }
-.family-f-3:before {
-	content: "\e609";
+.family-f-4 {
+	background-image: url(png/f-4.png);
 }
-.family-f-2:before {
-	content: "\e60a";
+.family-f-3 {
+	background-image: url(png/f-3.png);
 }
-.family-f-1:before {
-	content: "\e60b";
+.family-f-2 {
+	background-image: url(png/f-2.png);
 }
-.family-f-0:before {
-  content: "\e60c";
+.family-f-1 {
+	background-image: url(png/f-1.png);
 }
-.family-b:before {
-	content: "\e60c";
+.family-f-0 {
+  background-image: url(png/b.png);
+}
+.family-b {
+	background-image: url(png/b.png);
 }
 
 .dead {
@@ -81,7 +89,7 @@
     	bottom: 0;
     	left:0;
     	right:0;
-      	font-family: 'Source Sans Pro';        
+      	font-family: 'Source Sans Pro';
         color: #000;
         font-size: 20px;
 		background: #5C564F;
