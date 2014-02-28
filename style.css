@@ -46,6 +46,7 @@
 }
 .family-m-0 {
   background-image: url(png/b.png);
+    background-size: contain;
 }
 .family-f-6 {
   background-image: url(png/f-6.png);
@@ -67,6 +68,7 @@
 }
 .family-f-0 {
   background-image: url(png/b.png);
+    background-size: contain;
 }
 .family-b {
   background-image: url(png/b.png);
