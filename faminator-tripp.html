@@ -350,7 +350,7 @@
     ],
     "Generations": 13,
     "YearMin": 1549,
-    "YearMax": 1990.0383561643835,
+    "YearMax": 2014,
     "InitialGeneration": {
         "People": []
     },
@@ -1115,7 +1115,7 @@
   }
 
 
-var ageSteps = [2, 5, 8, 15, 30, 50, 120];
+var ageSteps = [1, 4, 9, 16, 28, 46, 120];
 
 function calcIcon(age, gender) {
   var lcGend = gender;
@@ -1204,8 +1204,8 @@ function addTimelineClassesToPerson(p) {
   if (p.Death) {
     // console.log('adding dead to ' + pid + ' at ' + (p.Death - data.YearMin));
     // tl.insert(TweenMax.to($(pid),1,{autoAlpha: .3}), p.Death - data.YearMin);
-    tl.insert(TweenMax.to($pid.find('img'),2,{autoAlpha:.3, rotation:"60deg", transformOrigin:"bottom left", ease:Bounce.easeOut}), p.Death - data.YearMin);
-    // rotation:"1.25rad"
+
+    tl.insert(TweenMax.to($pid.find('img'),5,{ autoAlpha:.3, rotation:70, transformOrigin:"bottom right", ease:Bounce.easeOut}), p.Death - data.YearMin);
   }
 }
 
@@ -1253,7 +1253,7 @@ data.Events.forEach(function(ev){
 
     TweenMax.set($("#p-"+stripToPid(ev.Id)), {top:(ev.Generation*genYIncrement)});
 
-    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 3, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation])}), yearOffset);
+    tl.insert(new TweenMax.to($("#p-"+stripToPid(ev.Id)), 3, {top: (ev.Generation*genYIncrement), left:(genXIncrement*gencount[ev.Generation]), ease:Ease.easeIn}), yearOffset);
 
   } else if (ev.Type == 'EnterGeneration'){
     genCounter(ev.Generation);

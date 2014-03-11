@@ -186,5 +186,9 @@ button {
     margin:2px;
 }
 
-
+svg.onpath{
+  position: absolute;
+  left:0;
+  bottom: 0;
+}
 
